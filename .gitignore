@@ -1,0 +1,5 @@
+master_climate_2000_2026.csv
+__pycache__/
+*.pyc
+.venv/
+get-pip.py
