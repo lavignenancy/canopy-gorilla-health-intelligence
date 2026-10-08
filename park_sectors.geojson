@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_id": "Sector_A_Karisoke",
+        "name": "Karisoke Core Sector",
+        "base_elevation_m": 3100
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.45, -1.45],
+            [29.52, -1.45],
+            [29.52, -1.40],
+            [29.45, -1.40],
+            [29.45, -1.45]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_id": "Sector_B_Mikeno",
+        "name": "Mikeno Slopes Sector",
+        "base_elevation_m": 2850
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.38, -1.50],
+            [29.45, -1.50],
+            [29.45, -1.44],
+            [29.38, -1.44],
+            [29.38, -1.50]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "sector_id": "Sector_C_Visoke",
+        "name": "Visoke High Ridge Sector",
+        "base_elevation_m": 3400
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [29.46, -1.41],
+            [29.50, -1.41],
+            [29.50, -1.37],
+            [29.46, -1.37],
+            [29.46, -1.41]
+          ]
+        ]
+      }
+    }
+  ]
+}

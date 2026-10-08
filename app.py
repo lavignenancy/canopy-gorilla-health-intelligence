@@ -123,15 +123,14 @@ with tab2:
         else:
             st.success(f"✅ LOW RISK WINDOW (Index Score: {risk_score:.1f}/100)")
 
+
 with tab3:
     st.markdown("#### Curated Vector Database Previews")
     
-    raw_pdfs = [
-        {'title': 'IUCN Great Ape Health Guidelines.pdf', 'sample_text': 'Guidelines for mountain gorilla field encounters, monitoring respiratory infection transmission.'},
-        {'title': 'AZA Captive Husbandry Manual.pdf', 'sample_text': 'Captive guidelines for western lowland gorillas. Isolation protocols apply for respiratory containment.'},
-        {'title': 'Study on Lipoprotein and Cardiovascular Risk.pdf', 'sample_text': 'Human cohorts showing markers for high lipoprotein cholesterol distribution.'},
-        {'title': 'Duplicate Great Ape Guidelines.pdf', 'sample_text': 'Guidelines for mountain gorilla field encounters, monitoring respiratory infection transmission.'}
-    ]
-    
-    curated = curate_knowledge_base(raw_pdfs)
-    st.dataframe(pd.DataFrame(curated)[['title', 'curated_category']], width="stretch")
+    import pdf_curator
+    if os.path.exists("kb_documents.csv"):
+        curated = pdf_curator.curate_knowledge_base_from_file("kb_documents.csv")
+        st.success(f"Successfully loaded and filtered {len(curated)} operational knowledge vectors from kb_documents.csv.")
+        st.dataframe(pd.DataFrame(curated)[['title', 'curated_category']], width="stretch")
+    else:
+        st.warning("kb_documents.csv not found. Please create the file in the project root directory.")

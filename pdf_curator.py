@@ -1,17 +1,32 @@
-def curate_knowledge_base(pdf_metadata_list):
-    curated_list = []
-    for doc in pdf_metadata_list:
-        title = doc['title'].lower()
-        content_sample = doc['sample_text'].lower()
+import pandas as pd
+import os
+
+def curate_knowledge_base_from_file(file_path="kb_documents.csv"):
+    if not os.path.exists(file_path):
+        return []
+    
+    df = pd.read_csv(file_path)
+    raw_pdf_list = df.to_dict(orient='records')
+    
+    blacklist = ['e-cigarette', 'lipoprotein', 'lyme', 'neandertal']
+    curated_knowledge = []
+    seen_titles = set()
+    
+    for doc in raw_pdf_list:
+        title = str(doc['title']).lower()
+        text = str(doc['sample_text']).lower()
         
-        if any(term in title or term in content_sample for term in ['e-cigarette', 'lipoprotein', 'lyme', 'neandertal']):
+        if title in seen_titles:
+            continue
+        if any(term in title or term in text for term in blacklist):
             continue
             
-        if 'gorilla' in content_sample or 'respiratory' in content_sample or 'zoonotic' in content_sample:
-            if 'captive' in content_sample or 'eaza' in title or 'aza' in title:
+        if 'gorilla' in text or 'respiratory' in text or 'zoonotic' in text:
+            seen_titles.add(title)
+            if 'captive' in text or 'eaza' in title or 'aza' in title:
                 doc['curated_category'] = "Captive Management Protocol (Zoonotic Only)"
             else:
                 doc['curated_category'] = "Primary Mountain Gorilla Field Manual"
-            curated_list.append(doc)
+            curated_knowledge.append(doc)
             
-    return curated_list
+    return curated_knowledge
