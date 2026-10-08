@@ -49,21 +49,26 @@ st.sidebar.metric(label="Current Altitude Alignment", value=f"{elevation_map[sel
 
 tab1, tab2, tab3 = st.tabs(["📋 Vet Review Queue", "🗺️ Climate & Macro-Risk Mapping", "📚 Curated Knowledge Base (RAG)"])
 
-mock_cases = pd.DataFrame({
-    'Case ID': ['CASE-2026-04', 'CASE-2026-05'],
-    'Gorilla Group': ['Susa-A', 'Pablo Group'],
-    'Reported Signs': ['Mild coughing, lethargy', 'Sustained nasal discharge'],
-    'Visibility Status': ['Clear View (Full Group)', 'Partial View (Dense Vegetation)'],
-    'Confidence Score': ['High (Senior Tracker)', 'Medium'],
-    'Sync Status': ['Acknowledged by Base', 'Seen']
-})
+if os.path.exists("clean_tracker_history.csv"):
+    df_cases = pd.read_csv("clean_tracker_history.csv")
+    active_cases = df_cases[df_cases['Case ID'] != 'None'].head(10)
+else:
+    active_cases = pd.DataFrame({
+        'Date': ['2026-10-08'],
+        'Case ID': ['CASE-2026-04'],
+        'Gorilla Group': ['Susa-A'],
+        'Reported Signs': ['Mild coughing, lethargy'],
+        'Visibility Status': ['Clear View (Full Group)'],
+        'Confidence Score': ['High (Senior Tracker)'],
+        'Sync Status': ['Acknowledged by Base']
+    })
 
 with tab1:
     st.markdown("#### Active Health Triage Queue")
-    st.dataframe(mock_cases, width="stretch")
+    st.dataframe(active_cases, width="stretch")
     
     st.markdown("---")
-    st.markdown("#### Action Center: Process Case `CASE-2026-04`")
+    st.markdown("#### Action Center: Process Selected Case Queue Item")
     
     col1, col2 = st.columns(2)
     with col1:
